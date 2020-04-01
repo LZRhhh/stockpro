@@ -10,6 +10,6 @@ public class HelloController {
     @GetMapping("/")
     public String hello(Model m) {
         m.addAttribute("name", "thymeleaf");
-        return "hello";
+        return "login";
     }
 }

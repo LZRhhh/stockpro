@@ -1,62 +1,81 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>登录 | SpringForAll - Spring Security</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="stylesheet" type="text/css" media="all" href="js/css/base.css" th:href="@{/js/css/base.css}"/>
+    <script src="/plugin/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/plugin/bootstrap/bootstrap.min.js"></script>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+    <script src="../static/js/ie10-viewport-bug-workaround.js"></script>
 </head>
+<body class="bg-cyan">
+<div class="container">
+    <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel-info">
+            <div style="background-color: rgba(247,247,247,0)">
+                <div class="panel-title"><h2>Sign In</h2></div>
+                <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot
+                    password?</a></div>
+            </div>
 
-<body style="background-color: #f1f1f1; padding-bottom: 0">
+            <div style="padding-top:50px" class="panel-body">
 
-<div th:insert="~{header :: nav}"></div>
+                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
 
-<div class="container" style="margin-top: 60px">
+                <form autocomplete="off" th:action="@{/login}" method="post" class="sky-form" role="form">
+                        <section>
+                            <div style="margin-bottom: 25px" class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input id="login-email" type="text" class="form-control" name="email"
+                                       th:placeholder="Email"
+                                />
+                            </div>
+                        </section>
+                        <section>
+                            <div style="margin-bottom: 25px" class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input type="text" style="display:none;"/>
+                                <input autocomplete="false" th:placeholder="Password" class="form-control"
+                                       id="login-password" name="password" type="password"/>
+                            </div>
+                        </section>
 
-    <div class="row" style="margin-top: 100px">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><span class="glyphicon glyphicon-console"></span> Login</h3>
-                </div>
-                <div class="panel-body">
-                    <form class="loginForm" th:action="@{/login}" method="post">
-                        <div th:if="${param.error}">
-                            <p th:text="${param.error}" style="text-align: center" class="text-danger" ></p>
-                        </div>
-                        <div class="form-group" style="margin-top: 30px">
-                            <div class="input-group col-md-6 col-md-offset-3">
-                                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                <input th:value="${param.role}" th:readonly="${param.role}" type="text" class="form-control" name="username" id="username" placeholder="username">
+                        <div class="input-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input id="login-remember" type="checkbox" name="remember-me" value="1"/> Remember
+                                    me
+                                </label>
                             </div>
                         </div>
-                        <div class="form-group ">
-                            <div class="input-group col-md-6 col-md-offset-3">
-                                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                                <input type="password" class="form-control" name="password" id="password"
-                                       placeholder="password">
-                            </div>
-                        </div>
-                        <br>
 
-                        <div class="form-group">
-                            <div class="input-group col-md-6 col-md-offset-3 col-xs-12 ">
-                                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        <div style="margin-top:10px" class="form-group">
+                            <!-- Button -->
+
+                            <div class="col-sm-12 controls">
+                                <button th:text="Login" type="submit" class="btn btn-primary btn-block">Login</button>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="input-group col-md-6 col-md-offset-3" style="text-align: center">
-                                <a href="/register">创建账号</a> | 忘记密码?
+                    <div class="form-group">
+                        <div class="col-md-12 control">
+                            <div style="border-top: 1px #ffffff; padding-top:15px; font-size:85%">
+                                Don't have an account?
+                                <a th:href="@{/registrations}"
+                                   onClick="$('#loginbox').hide(); $('#signupbox').show()">
+                                    Sign Up Here
+                                </a>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
 </div>
 
-</body>
 
+</body>
 </html>
