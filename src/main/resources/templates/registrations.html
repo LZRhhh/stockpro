@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <style>
+        /* The message box is shown when the user clicks on the password field */
+        #message {
+            display:none;
+            background: rgba(290,290,290,0.6);
+            color: #000;
+            position: relative;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        #message-conPsw {
+            display:none;
+            background: rgba(290,290,290,0.6);
+            color: #000;
+            position: relative;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        #message p {
+            padding: 5px 35px;
+            font-size: 18px;
+        }
+
+        /* Add a green text color and a checkmark when the requirements are right */
+        .valid {
+            color: green;
+        }
+
+        .valid:before {
+            position: relative;
+            left: -35px;
+            content: "✔";
+        }
+
+        /* Add a red text color and an "x" when the requirements are wrong */
+        .invalid {
+            color: red;
+        }
+
+        .invalid:before {
+            position: relative;
+            left: -35px;
+            content: "✖";
+        }
+    </style>
+
+    <title>Sign Up</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="all" href="js/css/base.css" th:href="@{/js/css/base.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+
+<body class="bg-cyan">
+<div class="container">
+    <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel-info">
+            <div style="background-color: rgba(247,247,247,0)">
+                <div class="panel-title"><h2>Sign Up</h2></div>
+            </div>
+
+            <div style="padding-top:30px" class="panel-body">
+
+                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+
+                <form autocomplete="off" th:action="@{/registrations}" method="post" class="sky-form" role="form">
+                    <section>
+                        <div style="margin-bottom: 25px">
+                                <div class="input-group mb-3">
+                                    <input id="reg-name" type="text" class="form-control" name="username"
+                                           th:placeholder="Username"/>
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+
+                                </div>
+                                </a>
+
+                        </div>
+                    </section>
+                    <section>
+                        <div style="margin-bottom: 25px">
+                            <div class="input-group mb-3">
+                                <input id="email" type="text" class="form-control" name="email"
+                                       th:placeholder="Email"/>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div style="margin-bottom: 25px">
+                            <div class="input-group mb-3">
+                                <input id="password" type="password" class="form-control" name="psw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required
+                                       th:placeholder="Password"/>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div style="margin-bottom: 25px">
+                            <div class="input-group mb-3">
+                                <input id="ConPassword" type="password" class="form-control" name="con-psw"
+                                       th:placeholder="Confirmation"/>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-repeat"></i></span>
+
+                            </div>
+                        </div>
+                    </section>
+                    <div style="margin-top:50px" class="form-group">
+                        <!-- Button -->
+
+                        <div class="col-sm-12 controls">
+                            <button th:text="SignUp" type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="message">
+    <h3 style="text-align:center">Password must contain the following:</h3>
+    <p id="letter" class="invalid" style="text-align:center">A <b>lowercase</b> letter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    <p id="capital" class="invalid" style="text-align:center">A <b>capital (uppercase)</b> letter&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    <p id="number" class="invalid" style="text-align:center">A <b>number</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    <p id="length" class="invalid" style="text-align:center">Minimum <b>8 characters&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></p>
+
+</div>
+<!--<div id="message-conPsw">
+    <p id="conPsw" class="invalid" style="text-align:center">Confirm password must match password</p>
+</div>
+-->
+
+<script>
+    var myInput = document.getElementById("password");
+    var letter = document.getElementById("letter");
+    var capital = document.getElementById("capital");
+    var number = document.getElementById("number");
+    var length = document.getElementById("length");
+//    var conPws = document.getElementById("ConPassword")
+
+    // When the user clicks on the password field, show the message box
+    myInput.onfocus = function() {
+        document.getElementById("message").style.display = "block";
+    }
+
+    // When the user clicks outside of the password field, hide the message box
+    myInput.onblur = function() {
+        document.getElementById("message").style.display = "none";
+    }
+
+    // When the user starts to type something inside the password field
+    myInput.onkeyup = function() {
+        // Validate lowercase letters
+        var lowerCaseLetters = /[a-z]/g;
+        if(myInput.value.match(lowerCaseLetters)) {
+            letter.classList.remove("invalid");
+            letter.classList.add("valid");
+        } else {
+            letter.classList.remove("valid");
+            letter.classList.add("invalid");
+        }
+
+        // Validate capital letters
+        var upperCaseLetters = /[A-Z]/g;
+        if(myInput.value.match(upperCaseLetters)) {
+            capital.classList.remove("invalid");
+            capital.classList.add("valid");
+        } else {
+            capital.classList.remove("valid");
+            capital.classList.add("invalid");
+        }
+
+        // Validate numbers
+        var numbers = /[0-9]/g;
+        if(myInput.value.match(numbers)) {
+            number.classList.remove("invalid");
+            number.classList.add("valid");
+        } else {
+            number.classList.remove("valid");
+            number.classList.add("invalid");
+        }
+
+        // Validate length
+        if(myInput.value.length >= 8) {
+            length.classList.remove("invalid");
+            length.classList.add("valid");
+        } else {
+            length.classList.remove("valid");
+            length.classList.add("invalid");
+        }
+    }
+/**    // When the user clicks on the password field, show the message box
+    conPws.onfocus = function() {
+        document.getElementById("message-conPsw").style.display = "block";
+    }
+
+    // When the user clicks outside of the password field, hide the message box
+    conPws.onblur = function() {
+        document.getElementById("message-conPsw").style.display = "none";
+    }
+
+    // When the user starts to type something inside the password field
+    conPws.onkeyup = function() {
+        // Validate Con-psw
+        if(conPws.value.match(myInput.value)) {
+            conPws.classList.remove("invalid");
+            conPws.classList.add("valid");
+        } else {
+            conPws.classList.remove("valid");
+            conPws.classList.add("invalid");
+        }
+    }
+ **/
+</script>
+</body>
+</html>
