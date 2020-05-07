@@ -21,7 +21,8 @@
 		
 		$(document).ready(function(){
 			const url = "/history";
-			// symbol 需要输入/选择
+			// ajax异步请求
+			// 待修改：symbol 需要输入/选择
 			$.get(url, {"symbol": "IBM"}, function(res, status){
 
 				var data = []
