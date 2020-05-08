@@ -8,14 +8,11 @@ import com.ece568.stockpro.pojo.HistoricalData;
 import com.ece568.stockpro.pojo.PredictData;
 import com.ece568.stockpro.pojo.RealtimeData;
 import com.ece568.stockpro.pojo.StockInfo;
-import com.ece568.stockpro.service.StockService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
