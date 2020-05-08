@@ -13,6 +13,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <link rel="stylesheet" th:href="@{js/font-awesome/4.5.0/css/font-awesome.min.css}" />
+    <link rel="stylesheet" th:href="@{js/css/customStyles.css}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
@@ -21,7 +22,7 @@
 <body>
 <div id="wrapper">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand mb-0 h1" style="font-size: x-large" href="#"><i class="fa fa-bar-chart" aria-hidden="true"><b>Stocks</b></i></a>
+        <a class="navbar-brand mb-0 h1" style="font-size: x-large" href="#"><i class="fa fa-bar-chart" aria-hidden="true"><b> Stocks</b></i></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -57,35 +58,64 @@
         </div>
     </nav>
 </div>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">First Name</th>
-        <th scope="col">Last Name</th>
-        <th scope="col">Username</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-    </tr>
-    </tbody>
-</table>
+<div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Advanced Tables -->
+            <div class="card">
+                <div class="card-action">
+                    Advanced Tables
+                </div>
+                <div class="card-content">
+                    <div class="table-responsive">
+                        <table class="table table-condensed"
+                               id="table"
+                               data-toggle="table"
+                               data-toolbar="#toolbar">
+                            <thead class="thead-light">
+                            <tr>
+                                <th data-field="id">ID</th>
+                                <th data-field="name">Item Name</th>
+                                <th data-field="data">data</th>
+                                <th data-field="data1">data1</th>
+                                <th data-field="data2">data2</th>
+                                <th data-field="data3">data3</th>
+                            </tr>
+                            </thead>
+                        </table>
+
+                        <script src="https://unpkg.com/bootstrap-table@1.13.4/dist/bootstrap-table.min.js"></script>
+                        <script>
+                            function randomData() {
+                                var startId = ~~(Math.random() * 100);
+                                var rows = [];
+                                for (var i = 0; i < 10; i++) {
+                                    rows.push({
+                                        id: startId + i,
+                                        name: 'test' + (startId + i),
+                                        data:   startId + i,
+                                        data1:  (startId + i),
+                                        data2:  (startId + i),
+                                        data3:  (startId + i)
+                                    })
+                                }
+                                console.log(rows);
+                                return rows;
+                            }
+
+
+                            $(function() {
+                                $('#table').bootstrapTable('append',randomData());
+                                $("td,th").addClass("text-center");
+                            })
+                        </script>
+                    </div>
+
+                </div>
+            </div>
+            <!--End Advanced Tables -->
+        </div>
+    </div>
+</div>
 </body>
 </html>

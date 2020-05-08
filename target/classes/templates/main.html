@@ -11,6 +11,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 		<link rel="stylesheet" th:href="@{js/font-awesome/4.5.0/css/font-awesome.min.css}" />
+		<link rel="stylesheet" th:href="@{js/css/customStyles.css}" />
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -56,8 +57,75 @@
 			</div>
 		</nav>
 	</div>
-	<p>
-	<div class="container" id="main" style="width: 700px; height:600px;"></div>
+	<div id="page-inner">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="card">
+					<div class="card-action">
+						Introduction
+					</div>
+					<div class="card-action">
+						<div class="card-content">
+								<div class="container" id="main" style="width: 800px; height:600px;"></div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+				<div class="col-md-4">
+					<!-- Advanced Tables -->
+					<div class="card">
+						<div class="card-action">
+							Predict Table
+						</div>
+						<div class="card-content">
+							<div class="table-responsive">
+								<table class="table table-condensed"
+									   id="table"
+									   data-toggle="table"
+									   data-toolbar="#toolbar">
+									<thead class="thead-light">
+									<tr>
+										<th data-field="id">ID</th>
+										<th data-field="name">Item Name</th>
+										<th data-field="data">data</th>
+										<th data-field="data1">data1</th>
+									</tr>
+									</thead>
+								</table>
+
+								<script src="https://unpkg.com/bootstrap-table@1.13.4/dist/bootstrap-table.min.js"></script>
+								<script>
+									function randomData() {
+										var startId = ~~(Math.random() * 100);
+										var rows = [];
+										for (var i = 0; i < 10; i++) {
+											rows.push({
+												id: startId + i,
+												name: 'test' + (startId + i),
+												data:   startId + i,
+												data1:  (startId + i)
+											})
+										}
+										console.log(rows);
+										return rows;
+									}
+
+
+									$(function() {
+										$('#table').bootstrapTable('append',randomData());
+										$("td,th").addClass("text-center");
+									})
+								</script>
+							</div>
+
+						</div>
+					</div>
+					<!--End Advanced Tables -->
+				</div>
+		</div>
+	</div>
+
 
 	</body>
 
