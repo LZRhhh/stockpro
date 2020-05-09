@@ -1,243 +1,23 @@
 
 var chart_history = echarts.init(document.getElementById('chart-history'));
-var data = []
-var option1 = {
-    tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'cross'
-        }
-    },
-    grid: [{
-        left: '3%',
-        top: '1%',
-        height: '58%'
-    }, {
-        left: '3%',
-        right: '10%',
-        top: '65%',
-        height: '10%'
-    }, {
-        left: '3%',
-        right: '10%',
-        top: '78%',
-        height: '10%'
-    }],
-    xAxis: [{
-        type: 'category',
-        data: data.categoryData,
-        scale: true,
-        boundaryGap: false,
-        axisLine: {
-            onZero: false,
-            lineStyle: {
-                color: 'red',
-            }
-        },
-        splitLine: {
-            show: false
-        },
-        splitNumber: 20
-    }, {
-        type: 'category',
-        gridIndex: 1,
-        data: data.categoryData,
-        axisLabel: {
-            show: false
-        },
-
-    }, {
-        type: 'category',
-        gridIndex: 2,
-        data: data.categoryData,
-        axisLabel: {
-            show: false
-        },
-
-    }],
-    yAxis: [{
-        scale: true,
-        splitArea: {
-            show: true
-        },
-        axisLine: {
-            lineStyle: {
-                color: 'red',
-            }
-        },
-        position: 'right'
-    }, {
-        gridIndex: 1,
-        splitNumber: 3,
-        axisLine: {
-            onZero: false,
-            lineStyle: {
-                color: 'red'
-
-            }
-        },
-        axisTick: {
-            show: false
-        },
-        splitLine: {
-            show: false
-        },
-        axisLabel: {
-            show: true
-        },
-        position: 'right'
-    }, {
-        gridIndex: 2,
-        splitNumber: 4,
-        axisLine: {
-            onZero: false,
-            lineStyle: {
-                color: 'red'
-
-            }
-        },
-        axisTick: {
-            show: false
-        },
-        splitLine: {
-            show: false
-        },
-        axisLabel: {
-            show: true
-        },
-        position: 'right'
-    }],
-    dataZoom: [{
-        type: 'inside',
-        start: 100,
-        end: 80
-    }, {
-        show: true,
-        type: 'slider',
-        y: '90%',
-        xAxisIndex: [0, 1],
-        start: 50,
-        end: 100
-    }, {
-        show: false,
-        xAxisIndex: [0, 2],
-        type: 'slider',
-        start: 20,
-        end: 100
-    }],
-    series: [{
-        name: 'value',
-        type: 'candlestick',
-        data: data.values,
-        markPoint: {
-            data: [{
-                name: 'XX标点'
-            }]
-        },
-        markLine: {
-            silent: true,
-            data: [{
-                yAxis: 2222,
-            }]
-        }
-    }, {
-        name: 'MA5',
-        type: 'line',
-        data: calculateMA(5, data),
-        smooth: true,
-        lineStyle: {
-            normal: {
-                opacity: 0.5
-            }
-        }
-    }, {
-        name: 'MA10',
-        type: 'line',
-        data: calculateMA(10, data),
-        smooth: true,
-        lineStyle: {
-            normal: {
-                opacity: 0.5
-            }
-        }
-    }, {
-        name: 'MA20',
-        type: 'line',
-        data: calculateMA(20, data),
-        smooth: true,
-        lineStyle: {
-            normal: {
-                opacity: 0.5
-            }
-        }
-    }, {
-        name: 'MA30',
-        type: 'line',
-        data: calculateMA(30, data),
-        smooth: true,
-        lineStyle: {
-            normal: {
-                opacity: 0.5
-            }
-        }
-    }, {
-        name: 'Volumn',
-        type: 'bar',
-        xAxisIndex: 1,
-        yAxisIndex: 1,
-        data: data.vols,
-        itemStyle: {
-            normal: {
-                color: function(params) {
-                    var colorList;
-                    if (data.values[params.dataIndex][1] > data.values[params.dataIndex][0]) {
-                        colorList = '#ef232a';
-                    } else {
-                        colorList = '#14b143';
-                    }
-                    return colorList;
-                },
-            }
-        }
-    }, {
-        name: 'MACD',
-        type: 'bar',
-        xAxisIndex: 2,
-        yAxisIndex: 2,
-        data: data.macds,
-        itemStyle: {
-            normal: {
-                color: function(params) {
-                    var colorList;
-                    if (params.data >= 0) {
-                        colorList = '#ef232a';
-                    } else {
-                        colorList = '#14b143';
-                    }
-                    return colorList;
-                },
-            }
-        }
-    }, {
-        name: 'DIF',
-        type: 'line',
-        xAxisIndex: 2,
-        yAxisIndex: 2,
-        data: data.difs
-    }, {
-        name: 'DEA',
-        type: 'line',
-        xAxisIndex: 2,
-        yAxisIndex: 2,
-        data: data.deas
-    }]
-};
-chart_history.setOption(option1);
+var data = [];
+var option = get_his_option(data);
+chart_history.setOption(option);
+const url_real = "/api/history";
 $(document).ready(function(){
-    const url = "/api/history";
-    // ajax异步请求
-    // 待修改：symbol 需要输入/选择
-    $.get(url, {"symbol": "IBM"}, function(res1, status){
+    var symbol = $('.selectpicker').val();
+    show_history(symbol);
+
+});
+$('.selectpicker').change(function(){
+    var symbol = $(this).val();
+    show_history(symbol);
+});
+
+
+
+function show_history(symbol){
+    $.get(url_real, {"symbol": symbol}, function(res1, status){
 
         var data = []
         for(var i in res1){
@@ -251,246 +31,249 @@ $(document).ready(function(){
             ])
         }
 
-        data = splitData1(data);
-        console.log(data)
+        data = split_history(data);
+        // console.log(data)
 
-        var option1 = {
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'cross'
+        var option = get_his_option(data)
+        chart_history.setOption(option);
+    });
+}
+
+function get_his_option(data){
+    var option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross'
+            }
+        },
+        grid: [{
+            left: '3%',
+            top: '1%',
+            height: '58%'
+        }, {
+            left: '3%',
+            right: '10%',
+            top: '65%',
+            height: '10%'
+        }, {
+            left: '3%',
+            right: '10%',
+            top: '78%',
+            height: '10%'
+        }],
+        xAxis: [{
+            type: 'category',
+            data: data.categoryData,
+            scale: true,
+            boundaryGap: false,
+            axisLine: {
+                onZero: false,
+                lineStyle: {
+                    color: 'red',
                 }
             },
-            grid: [{
-                left: '3%',
-                top: '1%',
-                height: '58%'
-            }, {
-                left: '3%',
-                right: '10%',
-                top: '65%',
-                height: '10%'
-            }, {
-                left: '3%',
-                right: '10%',
-                top: '78%',
-                height: '10%'
-            }],
-            xAxis: [{
-                type: 'category',
-                data: data.categoryData,
-                scale: true,
-                boundaryGap: false,
-                axisLine: {
-                    onZero: false,
-                    lineStyle: {
-                        color: 'red',
-                    }
-                },
-                splitLine: {
-                    show: false
-                },
-                splitNumber: 20
-            }, {
-                type: 'category',
-                gridIndex: 1,
-                data: data.categoryData,
-                axisLabel: {
-                    show: false
-                },
+            splitLine: {
+                show: false
+            },
+            splitNumber: 20
+        }, {
+            type: 'category',
+            gridIndex: 1,
+            data: data.categoryData,
+            axisLabel: {
+                show: false
+            },
 
-            }, {
-                type: 'category',
-                gridIndex: 2,
-                data: data.categoryData,
-                axisLabel: {
-                    show: false
-                },
+        }, {
+            type: 'category',
+            gridIndex: 2,
+            data: data.categoryData,
+            axisLabel: {
+                show: false
+            },
 
-            }],
-            yAxis: [{
-                scale: true,
-                splitArea: {
-                    show: true
-                },
-                axisLine: {
-                    lineStyle: {
-                        color: 'red',
-                    }
-                },
-                position: 'right'
-            }, {
-                gridIndex: 1,
-                splitNumber: 3,
-                axisLine: {
-                    onZero: false,
-                    lineStyle: {
-                        color: 'red'
-
-                    }
-                },
-                axisTick: {
-                    show: false
-                },
-                splitLine: {
-                    show: false
-                },
-                axisLabel: {
-                    show: true
-                },
-                position: 'right'
-            }, {
-                gridIndex: 2,
-                splitNumber: 4,
-                axisLine: {
-                    onZero: false,
-                    lineStyle: {
-                        color: 'red'
-
-                    }
-                },
-                axisTick: {
-                    show: false
-                },
-                splitLine: {
-                    show: false
-                },
-                axisLabel: {
-                    show: true
-                },
-                position: 'right'
-            }],
-            dataZoom: [{
-                type: 'inside',
-                start: 100,
-                end: 80
-            }, {
-                show: true,
-                type: 'slider',
-                y: '90%',
-                xAxisIndex: [0, 1],
-                start: 50,
-                end: 100
-            }, {
-                show: false,
-                xAxisIndex: [0, 2],
-                type: 'slider',
-                start: 20,
-                end: 100
-            }],
-            series: [{
-                name: 'value',
-                type: 'candlestick',
-                data: data.values,
-                markPoint: {
-                    data: [{
-                        name: 'XX标点'
-                    }]
-                },
-                markLine: {
-                    silent: true,
-                    data: [{
-                        yAxis: 2222,
-                    }]
-                }
-            }, {
-                name: 'MA5',
-                type: 'line',
-                data: calculateMA(5, data),
-                smooth: true,
+        }],
+        yAxis: [{
+            scale: true,
+            splitArea: {
+                show: true
+            },
+            axisLine: {
                 lineStyle: {
-                    normal: {
-                        opacity: 0.5
-                    }
+                    color: 'red',
                 }
-            }, {
-                name: 'MA10',
-                type: 'line',
-                data: calculateMA(10, data),
-                smooth: true,
+            },
+            position: 'right'
+        }, {
+            gridIndex: 1,
+            splitNumber: 3,
+            axisLine: {
+                onZero: false,
                 lineStyle: {
-                    normal: {
-                        opacity: 0.5
-                    }
+                    color: 'red'
+
                 }
-            }, {
-                name: 'MA20',
-                type: 'line',
-                data: calculateMA(20, data),
-                smooth: true,
+            },
+            axisTick: {
+                show: false
+            },
+            splitLine: {
+                show: false
+            },
+            axisLabel: {
+                show: true
+            },
+            position: 'right'
+        }, {
+            gridIndex: 2,
+            splitNumber: 4,
+            axisLine: {
+                onZero: false,
                 lineStyle: {
-                    normal: {
-                        opacity: 0.5
-                    }
-                }
-            }, {
-                name: 'MA30',
-                type: 'line',
-                data: calculateMA(30, data),
-                smooth: true,
-                lineStyle: {
-                    normal: {
-                        opacity: 0.5
-                    }
-                }
-            }, {
-                name: 'Volumn',
-                type: 'bar',
-                xAxisIndex: 1,
-                yAxisIndex: 1,
-                data: data.vols,
-                itemStyle: {
-                    normal: {
-                        color: function(params) {
-                            var colorList;
-                            if (data.values[params.dataIndex][1] > data.values[params.dataIndex][0]) {
-                                colorList = '#ef232a';
-                            } else {
-                                colorList = '#14b143';
-                            }
-                            return colorList;
-                        },
-                    }
-                }
-            }, {
-                name: 'MACD',
-                type: 'bar',
-                xAxisIndex: 2,
-                yAxisIndex: 2,
-                data: data.macds,
-                itemStyle: {
-                    normal: {
-                        color: function(params) {
-                            var colorList;
-                            if (params.data >= 0) {
-                                colorList = '#ef232a';
-                            } else {
-                                colorList = '#14b143';
-                            }
-                            return colorList;
-                        },
-                    }
-                }
-            }, {
-                name: 'DIF',
-                type: 'line',
-                xAxisIndex: 2,
-                yAxisIndex: 2,
-                data: data.difs
-            }, {
-                name: 'DEA',
-                type: 'line',
-                xAxisIndex: 2,
-                yAxisIndex: 2,
-                data: data.deas
-            }]
-        };
+                    color: 'red'
 
+                }
+            },
+            axisTick: {
+                show: false
+            },
+            splitLine: {
+                show: false
+            },
+            axisLabel: {
+                show: true
+            },
+            position: 'right'
+        }],
+        dataZoom: [{
+            type: 'inside',
+            start: 100,
+            end: 80
+        }, {
+            show: true,
+            type: 'slider',
+            y: '90%',
+            xAxisIndex: [0, 1],
+            start: 50,
+            end: 100
+        }, {
+            show: false,
+            xAxisIndex: [0, 2],
+            type: 'slider',
+            start: 20,
+            end: 100
+        }],
+        series: [{
+            name: 'value',
+            type: 'candlestick',
+            data: data.values,
+            markPoint: {
+                data: [{
+                    name: 'XX标点'
+                }]
+            },
+            markLine: {
+                silent: true,
+                data: [{
+                    yAxis: 2222,
+                }]
+            }
+        }, {
+            name: 'MA5',
+            type: 'line',
+            data: calculateMA(5, data),
+            smooth: true,
+            lineStyle: {
+                normal: {
+                    opacity: 0.5
+                }
+            }
+        }, {
+            name: 'MA10',
+            type: 'line',
+            data: calculateMA(10, data),
+            smooth: true,
+            lineStyle: {
+                normal: {
+                    opacity: 0.5
+                }
+            }
+        }, {
+            name: 'MA20',
+            type: 'line',
+            data: calculateMA(20, data),
+            smooth: true,
+            lineStyle: {
+                normal: {
+                    opacity: 0.5
+                }
+            }
+        }, {
+            name: 'MA30',
+            type: 'line',
+            data: calculateMA(30, data),
+            smooth: true,
+            lineStyle: {
+                normal: {
+                    opacity: 0.5
+                }
+            }
+        }, {
+            name: 'Volumn',
+            type: 'bar',
+            xAxisIndex: 1,
+            yAxisIndex: 1,
+            data: data.vols,
+            itemStyle: {
+                normal: {
+                    color: function(params) {
+                        var colorList;
+                        if (data.values[params.dataIndex][1] > data.values[params.dataIndex][0]) {
+                            colorList = '#ef232a';
+                        } else {
+                            colorList = '#14b143';
+                        }
+                        return colorList;
+                    },
+                }
+            }
+        }, {
+            name: 'MACD',
+            type: 'bar',
+            xAxisIndex: 2,
+            yAxisIndex: 2,
+            data: data.macds,
+            itemStyle: {
+                normal: {
+                    color: function(params) {
+                        var colorList;
+                        if (params.data >= 0) {
+                            colorList = '#ef232a';
+                        } else {
+                            colorList = '#14b143';
+                        }
+                        return colorList;
+                    },
+                }
+            }
+        }, {
+            name: 'DIF',
+            type: 'line',
+            xAxisIndex: 2,
+            yAxisIndex: 2,
+            data: data.difs
+        }, {
+            name: 'DEA',
+            type: 'line',
+            xAxisIndex: 2,
+            yAxisIndex: 2,
+            data: data.deas
+        }]
+    };
+    return option;
+}
 
-
-        chart_history.setOption(option1);
-    });
-});
 
 function calculateMA(dayCount, data) {
     var result = [];
@@ -512,7 +295,7 @@ function calculateMA(dayCount, data) {
     return result;
 }
 
-function splitData1(rawData) {
+function split_history(rawData) {
     var categoryData = [];
     var values = [];
     var vols = [];
