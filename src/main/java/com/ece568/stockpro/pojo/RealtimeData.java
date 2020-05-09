@@ -11,6 +11,7 @@ public class RealtimeData implements Comparable{
     private String symbol;
     private Time time;
     private double price;
+    private int volume;
 
     @Override
     public int compareTo(Object o) {
