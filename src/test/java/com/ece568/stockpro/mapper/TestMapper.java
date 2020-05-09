@@ -4,6 +4,7 @@ import com.ece568.stockpro.StockApplication;
 import com.ece568.stockpro.pojo.HistoricalData;
 import com.ece568.stockpro.pojo.RealtimeData;
 import com.ece568.stockpro.pojo.StockInfo;
+import com.ece568.stockpro.pojo.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +23,10 @@ public class TestMapper {
     RealtimeMapper realtimeMapper;
     @Resource
     HistoricalMapper historicalMapper;
+
+    @Resource
+    UserMapper userMapper;
+
 
     @Test
     public void testStockInfo(){
@@ -51,5 +56,11 @@ public class TestMapper {
                 System.out.println(hData.getClose());
             }
         }
+    }
+
+    @Test
+    public void testUser(){
+        User user = new User("Zhuoran", "liuzhuoran8@gmail.com", "lzr13579.");
+        userMapper.insert(user);
     }
 }

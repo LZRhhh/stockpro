@@ -1,20 +1,24 @@
 package com.ece568.stockpro.mapper;
 
 import com.ece568.stockpro.pojo.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository
 public interface UserMapper {
-    @Select("select * from `user` username = #{username}")
+    @Select("select * from `user` where username = #{username}")
     User getByName(String username);
 
-    @Insert("insert into user values " +
+    @Select("select * from `user` where email = #{email}")
+    User getByEmail(String email);
+
+    @Select("select * from `user` where username = #{username} and password = #{password}")
+    User getByUsernameAndPassword(String username, String password);
+
+    @Insert("insert into user (username, email, password) values " +
             "(#{username}, #{email}, #{password})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(User user);
 
     @Update("update user set" +

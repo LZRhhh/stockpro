@@ -1,133 +1,169 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="utf-8">
-		<title>Main</title>
-		<script th:src="@{js/jquery-3.5.0.min.js}" src="../static/js/jquery-3.5.0.min.js" type="text/javascript">
-		</script>
-		<script th:src="@{js/echarts.min.js}" src="../static/js/echarts.min.js" type="text/javascript">
-		</script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<head>
+	<meta charset="utf-8">
+	<title>Main</title>
+	<script th:src="@{js/jquery-3.5.0.min.js}" src="../static/js/jquery-3.5.0.min.js" type="text/javascript">
+	</script>
+	<script th:src="@{js/echarts.min.js}" src="../static/js/echarts.min.js" type="text/javascript">
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-		<link rel="stylesheet" th:href="@{js/font-awesome/4.5.0/css/font-awesome.min.css}" />
-		<link rel="stylesheet" th:href="@{js/css/customStyles.css}" />
+	<link rel="stylesheet" th:href="@{js/font-awesome/4.5.0/css/font-awesome.min.css}" />
+	<link rel="stylesheet" th:href="@{js/css/customStyles.css}" />
 
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-	</head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 
-	<body>
-	<div id="wrapper">
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand mb-0 h1" style="font-size: x-large" href="#"><i class="fa fa-bar-chart" aria-hidden="true"><b> Stocks</b></i></a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
-			<div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-size: larger">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+</head>
 
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active">
-						<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+<body>
+<div id="wrapper">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand mb-0 h1" style="font-size: x-large" href="#"><i class="fa fa-bar-chart" aria-hidden="true"><b> Stocks</b></i></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-size: larger">
+
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Dashboard <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/tables}">Table</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav navbar-right">
+				<li class="nav-item" th:unless="${session.username}"><a th:href="@{login}">Login</a></li>
+				<li class="nav-item dropdown" th:if="${session.username}">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-fw"></i>
+						<b><span th:text="${session.username}"></span></b>
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#">
+							<i class="fa fa-user fa-fw"></i> Profile
+						</a>
+						<a class="dropdown-item" href="#">
+							<i class="fa fa-gear fa-fw"></i> Settings
+						</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" th:href="@{/}">
+							<i class="fa fa-sign-out fa-fw"></i> Logout
+						</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
+</div>
+<div id="page-inner">
+	<div class="row">
+		<div class="col-md-8">
+			<div class="card">
+
+				<div class="navbar navbar-expand-lg navbar-light bg-white">
+					<b>Chart</b>&emsp;&emsp;
+					<ul class="navbar-nav navbar-right">
+						<select class="selectpicker">
+							<option value="stock1">Stock1</option>
+							<option>Stock2</option>
+							<option>Stock3</option>
+						</select>
+					</ul>
+
+					<script>
+						$(function(){})
+					</script>
+
+				</div>
+
+				<ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-left: 10px;">
+					<li class="nav-item">
+						<a class="nav-link active" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="true">History</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" th:href="@{/tables}">Table</a>
+						<a class="nav-link" id="realtime-tab" data-toggle="tab" href="#realtime" role="tab" aria-controls="realtime" aria-selected="false">Realtime</a>
 					</li>
 				</ul>
-				<ul class="navbar-nav navbar-right">
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-fw"></i>
-							<b> User name</b>
-						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="#">
-								<i class="fa fa-user fa-fw"></i> Profile
-							</a>
-							<a class="dropdown-item" href="#">
-								<i class="fa fa-gear fa-fw"></i> Settings
-							</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" th:href="@{/}">
-								<i class="fa fa-sign-out fa-fw"></i> Logout
-							</a>
-						</div>
-					</li></ul>
-			</div>
-		</nav>
-	</div>
-	<div id="page-inner">
-		<div class="row">
-			<div class="col-md-8">
-				<div class="card">
-					<div class="card-action">
-						Introduction
-					</div>
-					<div class="card-action">
+
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show active" id="history" role="tabpanel" aria-labelledby="history-tab">
 						<div class="card-content">
-								<div class="container" id="chart-realtime" style="width: 800px; height:600px;"></div>
+							<div class="container" id="chart-history" style="width: 800px; height:600px;"></div>
 						</div>
 					</div>
+					<div class="tab-pane fade" id="realtime" role="tabpanel" aria-labelledby="realtime-tab">2</div>
 				</div>
+
 			</div>
-				<div class="col-md-4">
-					<!-- Advanced Tables -->
-					<div class="card">
-						<div class="card-action">
-							Predict Table
-						</div>
-						<div class="card-content">
-							<div class="table-responsive">
-								<table class="table table-condensed"
-									   id="table"
-									   data-toggle="table"
-									   data-toolbar="#toolbar">
-									<thead class="thead-light">
-									<tr>
-										<th data-field="id">ID</th>
-										<th data-field="name">Item Name</th>
-										<th data-field="data">data</th>
-										<th data-field="data1">data1</th>
-									</tr>
-									</thead>
-								</table>
+		</div>
 
-								<script src="https://unpkg.com/bootstrap-table@1.13.4/dist/bootstrap-table.min.js"></script>
-								<script>
-									function randomData() {
-										var startId = ~~(Math.random() * 100);
-										var rows = [];
-										for (var i = 0; i < 10; i++) {
-											rows.push({
-												id: startId + i,
-												name: 'test' + (startId + i),
-												data:   startId + i,
-												data1:  (startId + i)
-											})
-										}
-										console.log(rows);
-										return rows;
-									}
+		<!-- Predict Tables -->
+		<div class="col-md-4">
+			<div class="card">
+				<div class="card-action">
+					Predict Table
+				</div>
+				<div class="card-content">
+					<div class="table-responsive">
+						<table class="table table-condensed"
+							   id="table"
+							   data-toggle="table"
+							   data-toolbar="#toolbar">
+							<thead class="thead-light">
+							<tr>
+								<th data-field="id">ID</th>
+								<th data-field="name">Item Name</th>
+								<th data-field="data">data</th>
+								<th data-field="data1">data1</th>
+							</tr>
+							</thead>
+						</table>
 
-
-									$(function() {
-										$('#table').bootstrapTable('append',randomData());
-										$("td,th").addClass("text-center");
+						<script src="https://unpkg.com/bootstrap-table@1.13.4/dist/bootstrap-table.min.js"></script>
+						<script>
+							function randomData() {
+								var startId = ~~(Math.random() * 100);
+								var rows = [];
+								for (var i = 0; i < 10; i++) {
+									rows.push({
+										id: startId + i,
+										name: 'test' + (startId + i),
+										data:   startId + i,
+										data1:  (startId + i)
 									})
-								</script>
-							</div>
+								}
+								console.log(rows);
+								return rows;
+							}
 
-						</div>
+
+							$(function() {
+								$('#table').bootstrapTable('append',randomData());
+								$("td,th").addClass("text-center");
+							})
+						</script>
 					</div>
-					<!--End Advanced Tables -->
+
 				</div>
+			</div>
+			<!--End Advanced Tables -->
 		</div>
 	</div>
+</div>
 
 
-	</body>
+</body>
 
-	<script th:src="@{js/chart_history.js}"></script>
-	<script th:src="@{js/chart_realtime.js}"></script>
+<script th:src="@{js/chart_history.js}"></script>
+<script th:src="@{js/chart_realtime.js}"></script>
 </html>
