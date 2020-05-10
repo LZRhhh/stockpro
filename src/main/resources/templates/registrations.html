@@ -116,6 +116,9 @@
                             </div>
                         </div>
                     </section>
+                    <div style="text-align:center; color: red">
+                        <span th:if="${error}" th:text="${error}"></span>
+                    </div>
                     <section>
                         <div style="margin-top:50px" class="form-group">
                             <!-- Button -->
@@ -143,6 +146,7 @@
         </div>
     </div>
 </div>
+
 
 <div id="message">
     <h3 style="text-align:center">Password must contain the following:</h3>

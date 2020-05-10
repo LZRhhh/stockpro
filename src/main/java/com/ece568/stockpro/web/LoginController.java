@@ -27,9 +27,9 @@ public class LoginController {
         if((u = userService.authorize(user)) == null) {
             String errorMsg = "Username or password incorrect";
             model.addAttribute("error", errorMsg);
-            return "redirect:/login";
+            return "login";
         }
-        session.setAttribute("username", u.getUsername());
+        session.setAttribute("user", u);
         return "redirect:/main";
     }
 
@@ -45,10 +45,16 @@ public class LoginController {
         if((res = userService.insert(user)) != null){
             model.addAttribute("error", res);
             System.out.println(res);
-            return "redirect:/register";
+            return "registrations";
         }
 //        System.out.println("test2");
-        session.setAttribute("username", user.getUsername());
+        session.setAttribute("user", user);
+        return "redirect:/main";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.removeAttribute("user");
         return "redirect:/main";
     }
 }
