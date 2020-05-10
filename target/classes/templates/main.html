@@ -43,8 +43,13 @@
 				</li>
 			</ul>
 			<ul class="navbar-nav navbar-right">
+<<<<<<< HEAD
 				<li class="nav-item" th:unless="${session.user}"><a th:href="@{login}">Login</a></li>
 				<li class="nav-item dropdown" th:if="${session.user}">
+=======
+				<li class="nav-item" th:unless="${session.user.username}"><a th:href="@{login}">Login</a></li>
+				<li class="nav-item dropdown" th:if="${session.user.username}">
+>>>>>>> 3632ad8b799b8f1de62820e12df84630df079c2f
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-fw"></i>
 						<b><span th:text="${session.user.username}"></span></b>
 					</a>

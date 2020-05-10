@@ -11,7 +11,7 @@ a {
 }
 
 .panel-info{
-    background-color: rgba(290,290,290,0.6);
+    background-color: rgba(248,248,248,0.7);
     /* just in case there no content*/
     padding: 30px 25px 30px;
     margin: auto;
@@ -30,7 +30,15 @@ a:hover {
 }
 
 .bg-cyan {
-    background-image: url(../img/bg_login.jpg);
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 35rem;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 75%, #000000 100%), url("../img/bgPic1.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
 }
 
 .body {
@@ -41,6 +49,33 @@ a:hover {
 
 .body-s {
     max-width: 400px;
+}
+
+.btn-custom {
+    background-color: #64A19D;
+    border-color: #64A19D;
+}
+.btn-custom:hover,
+.btn-custom:focus,
+.btn-custom:active,
+.btn-custom.active {
+    background-color: #59938f;
+    border-color: #4f837f;
+}
+.btn-custom.disabled:hover,
+.btn-custom.disabled:focus,
+.btn-custom.disabled:active,
+.btn-custom.disabled.active,
+.btn-custom[disabled]:hover,
+.btn-custom[disabled]:focus,
+.btn-custom[disabled]:active,
+.btn-custom[disabled].active,
+fieldset[disabled] .btn-custom:hover,
+fieldset[disabled] .btn-custom:focus,
+fieldset[disabled] .btn-custom:active,
+fieldset[disabled] .btn-custom.active {
+    background-color: #64A19D;
+    border-color: #64A19D;
 }
 
 @media screen and (max-width: 600px) {
