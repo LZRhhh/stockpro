@@ -36,14 +36,14 @@
 
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="#">Dashboard <span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="#">Quotes <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" th:href="@{/tables}">Table</a>
+					<a class="nav-link" th:href="@{/tables}">Indicators</a>
 				</li>
 			</ul>
 			<ul class="navbar-nav navbar-right">
-				<li class="nav-item" th:unless="${session.user}"><a th:href="@{login}"><b>Login</b></a></li>
+				<li class="nav-item" th:unless="${session.user}"><a th:href="@{login}"><i class="fa fa-user fa-fw"></i><b>Login</b></a></li>
 				<li class="nav-item dropdown" th:if="${session.user}">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-fw"></i>
 						<b><span th:text="${session.user.username}"></span></b>
@@ -81,13 +81,14 @@
 					</ul>
 
 				</div>
+				<p></p>
 
 				<ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-left: 10px;">
 					<li class="nav-item">
-						<a class="nav-link active" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="true">History</a>
+						<a class="nav-link active" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="true" style="font-size: larger">History</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" id="realtime-tab" data-toggle="tab" href="#realtime" role="tab" aria-controls="realtime" aria-selected="false">Realtime</a>
+						<a class="nav-link" id="realtime-tab" data-toggle="tab" href="#realtime" role="tab" aria-controls="realtime" aria-selected="false" style="font-size: larger">Realtime</a>
 					</li>
 				</ul>
 

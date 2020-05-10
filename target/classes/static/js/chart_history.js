@@ -307,7 +307,7 @@ function split_history(rawData) {
         categoryData.push(rawData[i].splice(0, 1)[0]);
         values.push(rawData[i])
         vols.push(rawData[i][4]);
-        
+
     }
     return {
         categoryData: categoryData,
