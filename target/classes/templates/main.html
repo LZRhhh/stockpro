@@ -27,7 +27,7 @@
 <body>
 <div id="wrapper">
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand mb-0 h1" style="font-size: x-large" href="#"><i class="fa fa-bar-chart" aria-hidden="true"><b> Stocks</b></i></a>
+		<a class="navbar-brand mb-0 h1" style="font-size: x-large" href="#"><i class="fa fa-bar-chart" aria-hidden="true"><b> Stock Pro</b></i></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -43,13 +43,8 @@
 				</li>
 			</ul>
 			<ul class="navbar-nav navbar-right">
-<<<<<<< HEAD
-				<li class="nav-item" th:unless="${session.user}"><a th:href="@{login}">Login</a></li>
+				<li class="nav-item" th:unless="${session.user}"><a th:href="@{login}"><b>Login</b></a></li>
 				<li class="nav-item dropdown" th:if="${session.user}">
-=======
-				<li class="nav-item" th:unless="${session.user.username}"><a th:href="@{login}">Login</a></li>
-				<li class="nav-item dropdown" th:if="${session.user.username}">
->>>>>>> 3632ad8b799b8f1de62820e12df84630df079c2f
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-fw"></i>
 						<b><span th:text="${session.user.username}"></span></b>
 					</a>

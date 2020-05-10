@@ -299,20 +299,23 @@ function split_history(rawData) {
     var categoryData = [];
     var values = [];
     var vols = [];
+    var smas = [];
+    var emas = [];
     var macds = [];
-    var difs = [];
-    var deas = [];
+    var ccis = [];
     for (var i = 0; i < rawData.length; i++) {
         categoryData.push(rawData[i].splice(0, 1)[0]);
         values.push(rawData[i])
         vols.push(rawData[i][4]);
+        
     }
     return {
         categoryData: categoryData,
         values: values,
         vols: vols,
+        smas: smas,
+        emas: emas,
         macds: macds,
-        difs: difs,
-        deas: deas
+        ccis: ccis
     };
 }

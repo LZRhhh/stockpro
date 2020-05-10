@@ -49,12 +49,12 @@ public class TestMapper {
     }
     @Test
     public void testHistorical(){
-        String[] symbols = {"GOOG", "BABA"};
+        String[] symbols = {"GOOG"};
         for(String symbol : symbols){
             List<HistoricalData> rList = historicalMapper.findBySymbol(symbol);
-            for(HistoricalData hData : rList){
-                System.out.println(hData.getClose());
-            }
+//            for(HistoricalData hData : rList){
+//                System.out.println(symbol + ":" + hData.getDate().toString() + ":" + hData.getClose() + " " + hData.getVolume());
+//            }
         }
     }
 
