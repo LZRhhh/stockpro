@@ -42,7 +42,9 @@
                                        id="login-password" name="password" type="password"/>
                             </div>
                         </section>
-
+                        <div style="text-align:center; color: red">
+                            <span th:if="${error}" th:text="${error}"></span>
+                        </div>
                         <div class="input-group">
                             <div class="checkbox">
                                 <label>
