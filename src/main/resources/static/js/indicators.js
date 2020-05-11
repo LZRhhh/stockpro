@@ -163,8 +163,22 @@ function get_cci_option(data){
     }
     option0['series']= [{
         name: 'CCI',
-        type: 'line',
-        data: data.ccis
+        type: 'bar',
+        data: data.ccis,
+        itemStyle: {
+            normal: {
+                color: function(params) {
+                    var colorList;
+                    if (params.data >= 0) {
+                        colorList = '#ef232a';
+                    } else {
+                        colorList = '#14b143';
+                    }
+                    return colorList;
+                }
+            }
+        },
+        stack: 'one'
     }];
     return option0;
 }
