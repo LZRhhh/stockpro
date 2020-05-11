@@ -1,10 +1,7 @@
 package com.ece568.stockpro.mapper;
 
 import com.ece568.stockpro.StockApplication;
-import com.ece568.stockpro.pojo.HistoricalData;
-import com.ece568.stockpro.pojo.RealtimeData;
-import com.ece568.stockpro.pojo.StockInfo;
-import com.ece568.stockpro.pojo.User;
+import com.ece568.stockpro.pojo.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +23,14 @@ public class TestMapper {
 
     @Resource
     UserMapper userMapper;
+    @Resource
+    PredictMapper predictMapper;
 
+    @Test
+    public void testPre(){
+        List<PredictData> list = predictMapper.findBySymbol("GOOG");
+        System.out.println(list.get(0).getSymbol());
+    }
 
     @Test
     public void testStockInfo(){

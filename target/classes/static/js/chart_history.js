@@ -7,8 +7,8 @@ const url_his = "/api/history";
 $(document).ready(function(){
     var symbol = $('.selectpicker').val();
     show_history(symbol);
-
 });
+
 $('.selectpicker').change(function(){
     var symbol = $(this).val();
     show_history(symbol);
@@ -18,7 +18,7 @@ $('.selectpicker').change(function(){
 
 function show_history(symbol){
     $.get(url_his, {"symbol": symbol}, function(res1, status){
-        console.log(res1)
+        // console.log(res1)
         var data = []
         for(var i in res1){
             data.unshift([
@@ -28,15 +28,15 @@ function show_history(symbol){
                 res1[i].low,
                 res1[i].high,
                 res1[i].volume,
-                res1[i]['sma'],
-                res1[i]['ema'],
+                res1[i].sma,
+                res1[i].ema,
                 res1[i].macd,
                 res1[i].cci,
             ])
         }
 
         data = split_history(data);
-        console.log(data)
+        // console.log(data)
 
         var option = get_his_option(data)
         chart_history.setOption(option);

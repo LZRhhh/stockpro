@@ -115,42 +115,32 @@
 				<div class="card-content">
 					<div class="table-responsive">
 						<table class="table table-condensed"
-							   id="table"
+							   id="predict-table"
 							   data-toggle="table"
 							   data-toolbar="#toolbar">
 							<thead class="thead-light">
 							<tr>
-								<th data-field="id">ID</th>
-								<th data-field="name">Item Name</th>
-								<th data-field="data">data</th>
-								<th data-field="data1">data1</th>
+								<th data-field="name">Algorithm</th>
+								<th data-field="data">Data</th>
+								<th data-field="trend">Growth Rate (%)</th>
+							</tr>
+							</thead>
+						</table>
+						<table class="table table-condensed"
+							   id="indicator-table"
+							   data-toggle="table"
+							   data-toolbar="#toolbar">
+							<thead class="thead-light">
+							<tr>
+								<th data-field="name">Indicator</th>
+								<th data-field="data">Data</th>
+								<th data-field="coef">Coefficient</th>
 							</tr>
 							</thead>
 						</table>
 
 						<script src="https://unpkg.com/bootstrap-table@1.13.4/dist/bootstrap-table.min.js"></script>
-						<script>
-							function randomData() {
-								var startId = ~~(Math.random() * 100);
-								var rows = [];
-								for (var i = 0; i < 10; i++) {
-									rows.push({
-										id: startId + i,
-										name: 'test' + (startId + i),
-										data:   startId + i,
-										data1:  (startId + i)
-									})
-								}
-								// console.log(rows);
-								return rows;
-							}
 
-
-							$(function() {
-								$('#table').bootstrapTable('append',randomData());
-								$("td,th").addClass("text-center");
-							})
-						</script>
 					</div>
 
 				</div>

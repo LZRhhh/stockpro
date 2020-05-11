@@ -1,152 +1,82 @@
+const url_pre = '/api/predict';
 
-var chart_indicators = echarts.init(document.getElementById('chart-indicators'));
-var data = [];
-const url_his = "/api/history";
-var option = get_his_option(data);
-chart_indicators.setOption(option);
-$(document).ready(function(){
-    var symbol = $('.selectpicker').val();
-    show_indicators(symbol);
-
-});
-$('.selectpicker').change(function(){
-    var symbol = $(this).val();
-    show_indicators(symbol);
-});
-
-
-
-function show_indicators(symbol){
-    $.get(url_his, {"symbol": symbol}, function(res1, status){
-
-        var data = []
-        for(var i in res1){
-            data.unshift([
-                res1[i].date,
-                res1[i].sma,
-                res1[i].ema,
-                res1[i].macd,
-                res1[i].cci,
-            ])
-        }
-
-        data = split_indicators(data);
-        console.log(data)
-
-        var option = get_his_option(data)
-        chart_indicators.setOption(option);
-    });
-}
-
-function get_his_option(data){
-    var option = {
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'cross'
-            }
-        },
-        grid: [{
-            left: '3%',
-            top: '1%',
-            height: '88%'
-        }],
-        xAxis: [{
-            type: 'category',
-            data: data.categoryData,
-            scale: true,
-            boundaryGap: false,
-            axisLine: {
-                onZero: false,
-                lineStyle: {
-                    color: 'red',
-                }
-            },
-            splitLine: {
-                show: false
-            },
-            splitNumber: 20
-        }],
-        yAxis: [{
-            scale: true,
-            splitArea: {
-                show: true
-            },
-            axisLine: {
-                lineStyle: {
-                    color: 'red',
-                }
-            },
-            position: 'right'
-        }],
-        dataZoom: [{
-            type: 'inside',
-            start: 100,
-            end: 80
-        }, {
-            show: true,
-            type: 'slider',
-            y: '90%',
-            start: 50,
-            end: 100
-        }, {
-            show: false,
-            type: 'slider',
-            start: 20,
-            end: 100
-        }],
-        series: [{
-            name: 'MACD',
-            type: 'bar',
-            data: data.macds,
-            itemStyle: {
-                normal: {
-                    color: function(params) {
-                        var colorList;
-                        if (params.data >= 0) {
-                            colorList = '#ef232a';
-                        } else {
-                            colorList = '#14b143';
-                        }
-                        return colorList;
-                    },
-                }
-            }
-        }, {
-            name: 'SMA',
-            type: 'line',
-            data: data.smas
-        }, {
-            name: 'EMA',
-            type: 'line',
-            data: data.emas
-        }, {
-            name: 'CCI',
-            type: 'line',
-            data: data.ccis
-        }]
-    };
-    return option;
-}
-
-function split_indicators(rawData) {
-    var categoryData = [];
-    var smas = [];
-    var emas = [];
-    var macds = [];
-    var ccis = [];
-    for (var i = 0; i < rawData.length; i++) {
-        categoryData.push(rawData[i][0]);
-        smas.push(rawData[i][1]);
-        emas.push(rawData[i][2]);
-        macds.push(rawData[i][3]);
-        ccis.push(rawData[i][4]);
+function randomData() {
+    var startId = ~~(Math.random() * 100);
+    var rows = [];
+    for (var i = 0; i < 10; i++) {
+        rows.push({
+            id: startId + i,
+            name: 'test' + (startId + i),
+            data:   startId + i,
+            data1:  (startId + i)
+        })
     }
-    return {
-        categoryData: categoryData,
-        smas: smas,
-        emas: emas,
-        macds: macds,
-        ccis: ccis
-    };
+    // console.log(rows);
+    return rows;
+}
+
+
+$(document).ready(function() {
+    var symbol = $('.selectpicker').val();
+    loadData(symbol);
+    $("td,th").addClass("text-center");
+});
+
+$('.selectpicker').change(function(){
+
+    //刷新后需要删除之前的数据
+    // $("#predict-table  tr:not(:first)").remove();
+    // $("#indicator-table  tr:not(:first)").remove();
+    var symbol = $('.selectpicker').val();
+    loadData(symbol);
+    $("td,th").addClass("text-center");
+});
+
+function loadData(symbol) {
+    $.get(url_pre, {"symbol": symbol}, function (res) {
+        console.log(res);
+        $.get(url_his, {"symbol": symbol, "num": 1}, function (res1) {
+            console.log(res1);
+            var preData = [];
+            preData.push({
+                name: 'Bayes',
+                data: res.bayes,
+                trend: ((res.bayes - res1[0].close)/res1[0].close * 100).toFixed(4) + '%'
+            });
+            preData.push({
+                name: 'SVM',
+                data: res.svm,
+                trend: ((res.svm - res1[0].close)/res1[0].close * 100).toFixed(4) + '%'
+            });
+            preData.push({
+                name: 'LSTM',
+                data: res.lstm,
+                trend: ((res.lstm - res1[0].close)/res1[0].close * 100).toFixed(4) + '%'
+            });
+            var inData = [];
+            inData.push({
+                name: 'SMA',
+                data: res1[0].sma,
+                coef: res.c_sma
+            });
+            inData.push({
+                name: 'EMA',
+                data: res1[0].ema,
+                coef: res.c_ema
+            });
+            inData.push({
+                name: 'MACD',
+                data: res1[0].macd,
+                coef: res.c_macd
+            });
+            inData.push({
+                name: 'CCI',
+                data: res1[0].cci,
+                coef: res.c_cci
+            });
+            console.log(inData);
+            $('#predict-table').bootstrapTable('append', preData);
+            $('#indicator-table').bootstrapTable('append', inData);
+        });
+    })
 }

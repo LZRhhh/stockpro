@@ -15,6 +15,9 @@ public interface HistoricalMapper {
     @Select("select * from `historical_data` where symbol = #{symbol}")
     List<HistoricalData> findBySymbol(String symbol);
 
+    @Select("select * from `historical_data` where symbol = #{symbol} limit #{num}")
+    List<HistoricalData> getBySymbol(String symbol, int num);
+
     @Insert("insert into historical_data (symbol, close, date, high, low, open, volume)" +
             "values (#{symbol}, #{close}, #{date}, #{high}, #{low}, #{open}, #{volume})")
     @Options(useGeneratedKeys = true, keyProperty = "id")

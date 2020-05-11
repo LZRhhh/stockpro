@@ -9,7 +9,7 @@ public class PredictData {
     private String symbol;
     private double bayes;
     private double svm;
-    private double ann;
+    private double lstm;
     private double c_sma;
     private double c_ema;
     private double c_macd;

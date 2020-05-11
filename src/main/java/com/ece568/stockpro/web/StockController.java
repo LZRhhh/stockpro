@@ -33,10 +33,18 @@ public class StockController {
     }
 
     @GetMapping("/api/history")
-    public List<HistoricalData> listHis(@Param("symbol") String symbol){
-        List<HistoricalData> list = historicalMapper.findBySymbol(symbol);
-        Collections.sort(list);
-        return list;
+    public List<HistoricalData> listHis(@Param("symbol") String symbol, @Param("num") String num){
+        if(num==null){
+            List<HistoricalData> list = historicalMapper.findBySymbol(symbol);
+            Collections.sort(list);
+            return list;
+        }
+        else {
+            int n = Integer.parseInt(num);
+            List<HistoricalData> list = historicalMapper.getBySymbol(symbol, n);
+            Collections.sort(list);
+            return list;
+        }
     }
 
     @GetMapping("/api/realtime")
@@ -48,7 +56,9 @@ public class StockController {
 
     @GetMapping("/api/predict")
     public PredictData listPre(@Param("symbol") String symbol){
+//        System.out.println(symbol);
         PredictData data = predictMapper.findBySymbol(symbol).get(0);
+//        System.out.println(data.getSymbol());
         return data;
     }
 }
