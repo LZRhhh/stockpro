@@ -14,6 +14,10 @@ public class HistoricalData implements Comparable{
     private double low;
     private double close;
     private int volume;
+    private double sma;
+    private double ema;
+    private double macd;
+    private double cci;
 
     public HistoricalData(String symbol, Date date, double open, double high, double low, double close, int volume) {
         this.symbol = symbol;

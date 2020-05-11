@@ -74,9 +74,7 @@
                     <b>Chart</b>&emsp;&emsp;
                     <ul class="navbar-nav navbar-right">
                         <select class="selectpicker">
-                            <option>IBM</option>
-                            <option>IBM</option>
-                            <option>IBM</option>
+                            <option th:each="stock:${stocks}" th:text="${stock.symbol}"></option>
                         </select>
                     </ul>
 
@@ -103,7 +101,7 @@
                     <div class="tab-pane fade show active" id="sma" role="tabpanel" aria-labelledby="sma-tab">
                         <div class="card-content row">
                             <div class="col-md-8">
-                                <div class="container" id="chart-history" style="width: 800px; height:600px;"></div>
+                                <div class="container" id="chart-sma" style="width: 800px; height:600px;"></div>
                             </div>
                             <!-- Introduction Tables -->
                             <div class="col-md-4 justify-content-end">
@@ -126,7 +124,7 @@
                     <div class="tab-pane fade" id="ema" role="tabpanel" aria-labelledby="sma-tab">
                         <div class="card-content row">
                             <div class="col-md-8">
-                                <div class="container" id="chart-realtime" style="width: 800px; height:600px;"></div>
+                                <div class="container" id="chart-ema" style="width: 800px; height:600px;"></div>
                             </div>
                             <!-- Introduction Tables -->
                             <div class="col-md-4 justify-content-end">
@@ -202,7 +200,5 @@
 
 </body>
 
-<script th:src="@{js/chart_history.js}"></script>
-<script th:src="@{js/chart_realtime.js}"></script>
-<script th:src="@{js/side_table.js}"></script>
+<script th:src="@{js/indicators.js}"></script>
 </html>

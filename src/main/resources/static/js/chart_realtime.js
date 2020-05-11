@@ -3,7 +3,7 @@ var chart_realtime = echarts.init(document.getElementById('chart-realtime'));
 var data = [];
 var option = get_real_option(data);
 chart_realtime.setOption(option);
-const url_his = "/api/realtime";
+const url_real = "/api/realtime";
 $(document).ready(function(){
     var symbol = $('.selectpicker').val();
     show_realtime(symbol);
@@ -14,7 +14,7 @@ $('.selectpicker').change(function(){
 });
 
 function show_realtime(symbol) {
-    $.get(url_his, {"symbol": symbol}, function(res, status){
+    $.get(url_real, {"symbol": symbol}, function(res, status){
 
         var data = []
         for(var i in res){

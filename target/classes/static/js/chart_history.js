@@ -3,7 +3,7 @@ var chart_history = echarts.init(document.getElementById('chart-history'));
 var data = [];
 var option = get_his_option(data);
 chart_history.setOption(option);
-const url_real = "/api/history";
+const url_his = "/api/history";
 $(document).ready(function(){
     var symbol = $('.selectpicker').val();
     show_history(symbol);
@@ -17,8 +17,8 @@ $('.selectpicker').change(function(){
 
 
 function show_history(symbol){
-    $.get(url_real, {"symbol": symbol}, function(res1, status){
-
+    $.get(url_his, {"symbol": symbol}, function(res1, status){
+        console.log(res1)
         var data = []
         for(var i in res1){
             data.unshift([
@@ -27,12 +27,16 @@ function show_history(symbol){
                 res1[i].close,
                 res1[i].low,
                 res1[i].high,
-                res1[i].volume
+                res1[i].volume,
+                res1[i]['sma'],
+                res1[i]['ema'],
+                res1[i].macd,
+                res1[i].cci,
             ])
         }
 
         data = split_history(data);
-        // console.log(data)
+        console.log(data)
 
         var option = get_his_option(data)
         chart_history.setOption(option);
@@ -256,19 +260,26 @@ function get_his_option(data){
                         return colorList;
                     },
                 }
-            }
+            },
+            stack: 'one'
         }, {
-            name: 'DIF',
+            name: 'SMA',
             type: 'line',
             xAxisIndex: 2,
             yAxisIndex: 2,
-            data: data.difs
+            data: data.smas
         }, {
-            name: 'DEA',
+            name: 'EMA',
             type: 'line',
             xAxisIndex: 2,
             yAxisIndex: 2,
-            data: data.deas
+            data: data.emas
+        }, {
+            name: 'CCI',
+            type: 'line',
+            xAxisIndex: 2,
+            yAxisIndex: 2,
+            data: data.ccis
         }]
     };
     return option;
@@ -307,7 +318,10 @@ function split_history(rawData) {
         categoryData.push(rawData[i].splice(0, 1)[0]);
         values.push(rawData[i])
         vols.push(rawData[i][4]);
-
+        smas.push(rawData[i][5]);
+        emas.push(rawData[i][6]);
+        macds.push(rawData[i][7]);
+        ccis.push(rawData[i][8]);
     }
     return {
         categoryData: categoryData,
