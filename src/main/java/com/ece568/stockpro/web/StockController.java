@@ -40,9 +40,10 @@ public class StockController {
             return list;
         }
         else {
-            int n = Integer.parseInt(num);
+            int n = Integer.parseInt(num) +1;
             List<HistoricalData> list = historicalMapper.getBySymbol(symbol, n);
-            Collections.sort(list);
+            if(list.get(0).getEma()==0)
+                list.remove(0);
             return list;
         }
     }
