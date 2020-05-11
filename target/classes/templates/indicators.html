@@ -107,13 +107,14 @@
                             <div class="col-md-4 justify-content-end">
                                 <div class="card">
                                     <div class="card-action">
-                                        Introduction Table
+                                        Introduction
                                     </div>
                                     <div class="card-content">
                                         <div class="table-responsive">
-                                            some introduction
+                                            Moving Averages are used to smooth the data in an array to help eliminate noise and identify trends. The Simple Moving Average is literally the simplest form of a moving average. Each output value is the average of the previous n values. In a Simple Moving Average, each value in the time period carries equal weight, and values outside of the time period are not included in the average. This makes it less responsive to recent changes in the data, which can be useful for filtering out those changes.
                                         </div>
-
+                                        <div>Formula:</div>
+                                        <img th:src="@{img/SimpleMA.gif}" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -130,13 +131,14 @@
                             <div class="col-md-4 justify-content-end">
                                 <div class="card">
                                     <div class="card-action">
-                                        Introduction Table
+                                        Introduction
                                     </div>
                                     <div class="card-content">
                                         <div class="table-responsive">
-                                            some introduction-ema
+                                            The Exponential Moving Average is a staple of technical analysis and is used in countless technical indicators. In a Simple Moving Average, each value in the time period carries equal weight, and values outside of the time period are not included in the average. However, the Exponential Moving Average is a cumulative calculation, including all data. Past values have a diminishing contribution to the average, while more recent values have a greater contribution. This method allows the moving average to be more responsive to changes in the data.
                                         </div>
-
+                                        <div>Formula:</div>
+                                        <img th:src="@{img/ExpMA.gif}" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -153,13 +155,18 @@
                             <div class="col-md-4 justify-content-end">
                                 <div class="card">
                                     <div class="card-action">
-                                        Introduction Table
+                                        Introduction
                                     </div>
                                     <div class="card-content">
                                         <div class="table-responsive">
-                                            some introduction-macd
+                                            The Moving Average Convergence Divergence (MACD) is the difference between two Exponential Moving Averages. The Signal line is an Exponential Moving Average of the MACD.
                                         </div>
-
+                                        <div>The MACD signals trend changes and indicates the start of new trend direction. High values indicate overbought conditions, low values indicate oversold conditions. Divergence with the price indicates an end to the current trend, especially if the MACD is at extreme high or low values. When the MACD line crosses above the signal line a buy signal is generated. When the MACD crosses below the signal line a sell signal is generated. To confirm the signal, the MACD should be above zero for a buy, and below zero for a sell.
+                                        </div>
+                                        <div>The time periods for the MACD are often given as 26 and 12. However the function actually uses exponential constants of 0.075 and 0.15, which are closer to 25.6667 and 12.3333 periods. To create a similar indicator with time periods other than those built into the MACD, use the Price Oscillator function.
+                                        </div>
+                                        <div>Formula:</div>
+                                        <img th:src="@{img/MACD.gif}" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -176,13 +183,14 @@
                             <div class="col-md-4 justify-content-end">
                                 <div class="card">
                                     <div class="card-action">
-                                        Introduction Table
+                                        Introduction
                                     </div>
                                     <div class="card-content">
                                         <div class="table-responsive">
-                                            some introduction-cci
+                                            The CCI is designed to detect beginning and ending market trends. The range of 100 to -100 is the normal trading range. CCI values outside of this range indicate overbought or oversold conditions. You can also look for price divergence in the CCI. If the price is making new highs, and the CCI is not, then a price correction is likely.
                                         </div>
-
+                                        <div>Formula:</div>
+                                        <img th:src="@{img/CCI.gif}" alt="">
                                     </div>
                                 </div>
                             </div>

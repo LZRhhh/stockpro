@@ -71,7 +71,7 @@ var option = {
     grid: [{
         left: '3%',
         top: '1%',
-        height: '88%'
+        height: '85%'
     }],
     yAxis: [{
         scale: true,

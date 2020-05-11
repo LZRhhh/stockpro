@@ -39,7 +39,7 @@
 					<a class="nav-link" href="#">Quotes <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" th:href="@{/tables}">Indicators</a>
+					<a class="nav-link" th:href="@{/indicators}">Indicators</a>
 				</li>
 			</ul>
 			<ul class="navbar-nav navbar-right">
@@ -107,27 +107,40 @@
 		</div>
 
 		<!-- Predict Tables -->
-		<div class="col-md-4">
+		<div class="col-md-4 text-center">
 			<div class="card">
 				<div class="card-action">
-					Predict Table
+					Prediction
 				</div>
 				<div class="card-content">
 					<div class="table-responsive">
 						<table class="table table-condensed"
 							   id="predict-table"
+							   data-url='x'
 							   data-toggle="table"
 							   data-toolbar="#toolbar">
 							<thead class="thead-light">
 							<tr>
 								<th data-field="name">Algorithm</th>
 								<th data-field="data">Data</th>
-								<th data-field="trend">Growth Rate (%)</th>
+								<th data-field="trend">Growth Rate</th>
 							</tr>
 							</thead>
 						</table>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-action">
+					Indicators
+				</div>
+				<div class="card-content">
+					<div class="table-responsive">
 						<table class="table table-condensed"
 							   id="indicator-table"
+							   data-url='x'
 							   data-toggle="table"
 							   data-toolbar="#toolbar">
 							<thead class="thead-light">
@@ -138,13 +151,10 @@
 							</tr>
 							</thead>
 						</table>
-
-						<script src="https://unpkg.com/bootstrap-table@1.13.4/dist/bootstrap-table.min.js"></script>
-
 					</div>
-
 				</div>
 			</div>
+			<script src="https://unpkg.com/bootstrap-table@1.13.4/dist/bootstrap-table.min.js"></script>
 			<!--End Advanced Tables -->
 		</div>
 	</div>

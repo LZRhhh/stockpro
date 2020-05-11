@@ -23,7 +23,7 @@ public class HomeController {
         return "main";
     }
 
-    @GetMapping("/tables")
+    @GetMapping("/indicators")
     public String tables(Model model){
         model.addAttribute("stocks",mapper.findAll());
         return "indicators";
